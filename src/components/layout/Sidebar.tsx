@@ -96,7 +96,7 @@ export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }:
                         </div>
                         {isOpen && (
                             <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                                <span style={{ fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>Dental Ai-UK</span>
+                                <span style={{ fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>Dental Ai</span>
                                 <span style={{ fontSize: '11px', fontWeight: '400', color: 'var(--muted)' }}>Administrator</span>
                             </div>
                         )}
