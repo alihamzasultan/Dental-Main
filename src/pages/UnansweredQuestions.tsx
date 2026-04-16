@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useUnansweredQuestions } from '../hooks/useUnansweredQuestions';
 import { format } from 'date-fns';
-import { Search, Phone, Plus, AlertCircle, MapPin } from 'lucide-react';
+import { Search, Phone, Plus, AlertCircle } from 'lucide-react';
 
 export function UnansweredQuestions() {
     const { questions, loading } = useUnansweredQuestions();
@@ -10,8 +10,7 @@ export function UnansweredQuestions() {
     const filteredQuestions = questions.filter(q => {
         return (
             (q.question?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-            q.caller_number.includes(searchTerm) ||
-            (q.location?.toLowerCase() || '').includes(searchTerm.toLowerCase())
+            q.caller_number.includes(searchTerm)
         );
     });
 
@@ -38,7 +37,7 @@ export function UnansweredQuestions() {
                         <Search className="icon" size={18} style={{ position: 'absolute', left: '12px', color: 'var(--muted)' }} />
                         <input
                             type="text"
-                            placeholder="Search by question, number, or location..."
+                            placeholder="Search by question or number..."
                             className="search-input"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
@@ -52,7 +51,6 @@ export function UnansweredQuestions() {
                             <tr>
                                 <th style={{ width: '140px' }}>Date</th>
                                 <th style={{ width: '150px' }}>Caller</th>
-                                <th style={{ width: '160px' }}>Location</th>
                                 <th>Unanswered Question</th>
                                 <th style={{ width: '130px', textAlign: 'right' }}>Actions</th>
                             </tr>
@@ -70,12 +68,6 @@ export function UnansweredQuestions() {
                                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                                 <Phone size={14} style={{ color: 'var(--muted)' }} />
                                                 <span style={{ fontSize: '13px' }}>{q.caller_number}</span>
-                                            </div>
-                                        </td>
-                                        <td style={{ verticalAlign: 'top' }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                <MapPin size={14} style={{ color: 'var(--muted)' }} />
-                                                <span style={{ fontSize: '13px' }}>{q.location || '—'}</span>
                                             </div>
                                         </td>
                                         <td>

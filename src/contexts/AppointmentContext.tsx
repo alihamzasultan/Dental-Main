@@ -52,7 +52,7 @@ export function AppointmentProvider({ children }: { children: React.ReactNode })
                 .select('*')
                 .order('appointment_time', { ascending: true });
 
-            if (selectedLocation && selectedLocation.id !== 'all') {
+            if (selectedLocation) {
                 query = query.ilike('location', selectedLocation.name);
             }
 
@@ -93,7 +93,7 @@ export function AppointmentProvider({ children }: { children: React.ReactNode })
                         
                         window.dispatchEvent(new CustomEvent('appointment-booked', { detail: newApt }));
 
-                        if (!selectedLocation || selectedLocation.id === 'all' || newApt.location === selectedLocation.name) {
+                        if (!selectedLocation || newApt.location === selectedLocation.name) {
                             setAppointments((current) => [...current, newApt]);
                         }
                     } else if (payload.eventType === 'UPDATE') {
@@ -141,7 +141,7 @@ export function AppointmentProvider({ children }: { children: React.ReactNode })
     const addAppointment = async (appointment: Partial<Appointment>) => {
         const { data, error } = await supabase
             .from(APPOINTMENTS_TABLE)
-            .insert([{ ...appointment, location: selectedLocation?.id !== 'all' ? selectedLocation?.name : undefined }])
+            .insert([{ ...appointment, location: selectedLocation?.name }])
             .select();
         if (error) throw error;
         return data;

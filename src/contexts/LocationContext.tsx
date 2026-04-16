@@ -18,17 +18,14 @@ const LocationContext = createContext<LocationContextType | undefined>(undefined
 
 export function LocationProvider({ children }: { children: ReactNode }) {
     const [locations, setLocations] = useState<Location[]>([]);
-    const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+    const [selectedLocation, setSelectedLocation] = useState<Location | null>({ id: 'uk', name: 'UK', city: 'Global' });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchLocations() {
             setLoading(true);
             const hardcodedLocations: Location[] = [
-                { id: 'all', name: 'All Locations', city: 'Global' },
-                { id: 'austin', name: 'AU', city: 'Austin' },
-                { id: 'newyork', name: 'NY', city: 'New York' },
-                { id: 'sanfrancisco', name: 'SF', city: 'San Francisco' }
+                { id: 'uk', name: 'UK', city: 'Global' }
             ];
             setLocations(hardcodedLocations);
             setSelectedLocation(hardcodedLocations[0]);

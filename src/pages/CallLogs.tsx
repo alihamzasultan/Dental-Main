@@ -1,25 +1,20 @@
 import { useState } from 'react';
 import { useCallLogs, CallOutcome } from '../hooks/useCallLogs';
 import { format } from 'date-fns';
-import { Search, Filter, Phone, Clock, MessageSquare, ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
+import { Phone, Clock, MessageSquare, ChevronLeft, ChevronRight, MapPin } from 'lucide-react';
 import { Badge } from '../components/ui/Badge';
 import { useLocations } from '../contexts/LocationContext';
 
 export function CallLogs() {
     const { callLogs, loading } = useCallLogs();
     const { selectedLocation } = useLocations();
-    const [searchTerm, setSearchTerm] = useState('');
-    const [outcomeFilter, setOutcomeFilter] = useState<CallOutcome | 'all'>('all');
 
     const filteredLogs = callLogs.filter(log => {
-        const matchesSearch = (log.caller_number?.toLowerCase() || '').includes(searchTerm.toLowerCase());
-        const matchesOutcome = outcomeFilter === 'all' || log.outcome === outcomeFilter;
-        
         // Filter by location if one is selected
-        const matchesLocation = !selectedLocation || selectedLocation.id === 'all' || 
-                                (log.location && log.location.toLowerCase() === selectedLocation.name.toLowerCase());
-                                
-        return matchesSearch && matchesOutcome && matchesLocation;
+        const matchesLocation = !selectedLocation || 
+            (log.location && log.location.toLowerCase() === selectedLocation.name.toLowerCase());
+
+        return matchesLocation;
     });
 
     if (loading) return <div style={{ padding: '48px', textAlign: 'center', color: 'var(--muted)' }}>Loading call logs...</div>;
@@ -32,12 +27,12 @@ export function CallLogs() {
                     <p className="page-subtitle">Monitor incoming AI-handled calls and their outcomes in real-time.</p>
                 </div>
                 {selectedLocation && (
-                    <div style={{ 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        gap: '8px', 
-                        padding: '8px 16px', 
-                        backgroundColor: 'var(--primary-light)', 
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '8px 16px',
+                        backgroundColor: 'var(--primary-light)',
                         borderRadius: '20px',
                         border: '1px solid var(--primary)',
                         color: 'var(--primary)',
@@ -46,39 +41,13 @@ export function CallLogs() {
                         marginBottom: '8px'
                     }}>
                         <MapPin size={16} />
-                        <span>Showing: {selectedLocation.name === 'All Locations' ? 'All Cities' : selectedLocation.name}</span>
+                        <span>Showing: {selectedLocation.name}</span>
                     </div>
                 )}
             </header>
 
             <div className="table-container">
-                <div className="table-header-row">
-                    <div className="search-input-wrapper">
-                        <Search className="icon" size={18} style={{ position: 'absolute', left: '12px', color: 'var(--muted)' }} />
-                        <input
-                            type="text"
-                            placeholder="Search by caller number..."
-                            className="search-input"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
-                    </div>
 
-                    <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                        <Filter size={18} style={{ color: 'var(--muted)' }} />
-                        <select
-                            className="search-input"
-                            style={{ paddingLeft: '16px', width: 'auto' }}
-                            value={outcomeFilter}
-                            onChange={(e) => setOutcomeFilter(e.target.value as any)}
-                        >
-                            <option value="all">All Outcomes</option>
-                            <option value="resolved">Resolved</option>
-                            <option value="transferred">Transferred</option>
-                            <option value="abandoned">Abandoned</option>
-                        </select>
-                    </div>
-                </div>
 
                 <div style={{ overflowX: 'auto' }}>
                     <table className="data-table">

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
+import { useLocations } from '../contexts/LocationContext';
 
 export interface FAQEntry {
     id: string;
@@ -7,20 +8,28 @@ export interface FAQEntry {
     answer: string;
     category: string;
     last_updated: string;
+    location?: string;
 }
 
 export function useFAQs() {
     const [faqs, setFaqs] = useState<FAQEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { selectedLocation } = useLocations();
 
     const fetchFAQs = useCallback(async () => {
         try {
             setLoading(true);
-            const { data, error } = await supabase
+            let query = supabase
                 .from('knowledge_base')
                 .select('*')
                 .order('created_at', { ascending: false });
+
+            if (selectedLocation) {
+                query = query.ilike('location', selectedLocation.name);
+            }
+
+            const { data, error } = await query;
 
             if (error) {
                 console.warn('FAQs table may not exist, using demo data');
@@ -35,7 +44,8 @@ export function useFAQs() {
                     question: item.question,
                     answer: item.answer,
                     category: 'General',
-                    last_updated: item.created_at
+                    last_updated: item.created_at,
+                    location: item.location
                 })) || [];
                 setFaqs(mappedData);
             }
@@ -45,11 +55,11 @@ export function useFAQs() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [selectedLocation]);
 
     useEffect(() => {
         fetchFAQs();
-    }, [fetchFAQs]);
+    }, [fetchFAQs, selectedLocation]);
 
     const saveFAQ = async (faq: Partial<FAQEntry>) => {
         const isNew = !faq.id;
@@ -60,10 +70,14 @@ export function useFAQs() {
             return text.replace(/[^a-zA-Z0-9., \n\r]/g, '');
         };
 
-        const entry = { 
+        const entry: any = { 
             question: sanitize(faq.question), 
             answer: sanitize(faq.answer) 
         };
+
+        if (isNew && selectedLocation) {
+            entry.location = selectedLocation.name;
+        }
 
         let result;
         if (isNew) {

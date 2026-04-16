@@ -12,7 +12,8 @@ import {
     MessageSquare,
     ChevronRight,
     ChevronDown,
-    LogOut
+    LogOut,
+    Bot
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -61,12 +62,12 @@ export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }:
                     <button
                         className="btn user-profile"
                         onClick={() => setShowUserMenu(!showUserMenu)}
-                        style={{ 
-                            width: '100%', display: 'flex', alignItems: 'center', 
-                            justifyContent: isOpen ? 'flex-start' : 'center', 
-                            padding: isOpen ? '6px 12px 6px 6px' : '6px', 
+                        style={{
+                            width: '100%', display: 'flex', alignItems: 'center',
+                            justifyContent: isOpen ? 'flex-start' : 'center',
+                            padding: isOpen ? '6px 12px 6px 6px' : '6px',
                             borderRadius: '12px',
-                            transition: 'all 0.2s', 
+                            transition: 'all 0.2s',
                             backgroundColor: 'var(--input)',
                             border: '1px solid var(--border)',
                             gap: '12px',
@@ -79,24 +80,24 @@ export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }:
                             e.currentTarget.style.borderColor = 'var(--border)';
                         }}
                     >
-                        <div className="user-avatar group" style={{ 
-                            flexShrink: 0, 
-                            backgroundColor: 'var(--primary)', 
+                        <div className="user-avatar group" style={{
+                            flexShrink: 0,
+                            backgroundColor: 'var(--primary)',
                             borderRadius: '8px',
                             width: '36px', height: '36px',
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             transition: 'all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)',
                             boxShadow: '0 4px 12px rgba(37, 99, 235, 0.3)'
                         }}
-                        onMouseOver={e => e.currentTarget.style.transform = 'scale(1.15) rotate(-10deg)'}
-                        onMouseOut={e => e.currentTarget.style.transform = 'scale(1) rotate(0)'}
+                            onMouseOver={e => e.currentTarget.style.transform = 'scale(1.15) rotate(-10deg)'}
+                            onMouseOut={e => e.currentTarget.style.transform = 'scale(1) rotate(0)'}
                         >
                             <img src="/tooth.png" style={{ height: '22px', width: '22px', filter: 'brightness(0) invert(1)', pointerEvents: 'none' }} />
                         </div>
                         {isOpen && (
                             <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                                <span style={{ fontSize: '14px', fontWeight: '800', color: 'var(--foreground)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>Dental Ai</span>
-                                <span style={{ fontSize: '11px', fontWeight: '600', color: 'var(--muted)' }}>Administrator</span>
+                                <span style={{ fontSize: '14px', fontWeight: '500', color: 'var(--foreground)', textOverflow: 'ellipsis', overflow: 'hidden', whiteSpace: 'nowrap' }}>Dental Ai-UK</span>
+                                <span style={{ fontSize: '11px', fontWeight: '400', color: 'var(--muted)' }}>Administrator</span>
                             </div>
                         )}
                     </button>
@@ -214,6 +215,13 @@ export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }:
                             onClick={() => setActivePage('sms-templates')}
                             isOpen={isOpen}
                         />
+                        <NavItem
+                            icon={<Bot size={18} strokeWidth={1.5} />}
+                            label="Add Agent"
+                            active={activePage === 'modify-agent'}
+                            onClick={() => setActivePage('modify-agent')}
+                            isOpen={isOpen}
+                        />
                     </>
                 )}
             </nav>
@@ -224,7 +232,7 @@ export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }:
 function SectionLabel({ isOpen, label, expanded = false, onToggle }: { isOpen: boolean, label: string, expanded?: boolean, onToggle?: () => void }) {
     if (!isOpen) return <div style={{ height: '8px' }}></div>;
     return (
-        <div 
+        <div
             onClick={onToggle}
             style={{
                 padding: '24px 24px 8px 24px',

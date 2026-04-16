@@ -40,28 +40,28 @@ export function Dashboard() {
                     label="Total Appointments"
                     value={stats.total.toString()}
                     icon={<Users size={20} />}
-                    trend="+4%"
+                    trend=""
                     type="total"
                 />
                 <StatCard
                     label="Booked"
                     value={stats.booked.toString()}
                     icon={<CalendarCheck size={20} />}
-                    trend="+2%"
+                    trend=""
                     type="booked"
                 />
                 <StatCard
                     label="Cancelled"
                     value={stats.cancelled.toString()}
                     icon={<CalendarX size={20} />}
-                    trend="-1%"
+                    trend=""
                     type="cancelled"
                 />
                 <StatCard
                     label="Rescheduled"
                     value={stats.rescheduled.toString()}
                     icon={<RotateCcw size={20} />}
-                    trend="+1%"
+                    trend=""
                     type="rescheduled"
                 />
             </div>
@@ -139,10 +139,10 @@ function StatCard({ label, value, icon, trend, type }: { label: string, value: s
     return (
         <div className="card" style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div style={{ 
-                    width: '40px', height: '40px', borderRadius: '8px', 
-                    backgroundColor: bg, color: color, 
-                    display: 'flex', alignItems: 'center', justifyContent: 'center' 
+                <div style={{
+                    width: '40px', height: '40px', borderRadius: '8px',
+                    backgroundColor: bg, color: color,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center'
                 }}>
                     {icon}
                 </div>

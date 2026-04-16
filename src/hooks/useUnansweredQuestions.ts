@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
+import { useLocations } from '../contexts/LocationContext';
 
 export interface UnansweredQuestion {
     id: string;
@@ -14,14 +15,21 @@ export function useUnansweredQuestions() {
     const [questions, setQuestions] = useState<UnansweredQuestion[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const { selectedLocation } = useLocations();
 
     const fetchQuestions = useCallback(async () => {
         try {
             setLoading(true);
-            const { data, error } = await supabase
+            let query = supabase
                 .from('unanswered_questions')
                 .select('*')
                 .order('created_at', { ascending: false });
+
+            if (selectedLocation) {
+                query = query.ilike('location', selectedLocation.name);
+            }
+
+            const { data, error } = await query;
 
             if (error) throw error;
             
@@ -64,11 +72,11 @@ export function useUnansweredQuestions() {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [selectedLocation]);
 
     useEffect(() => {
         fetchQuestions();
-    }, [fetchQuestions]);
+    }, [fetchQuestions, selectedLocation]);
 
     return { questions, loading, error, refresh: fetchQuestions };
 }

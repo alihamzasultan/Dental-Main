@@ -11,6 +11,7 @@ import { UnansweredQuestions } from './pages/UnansweredQuestions';
 import { FAQManagement } from './pages/FAQManagement';
 import { SMSTemplates } from './pages/SMSTemplates';
 import { Settings } from './pages/Settings';
+import { ModifyAgent } from './pages/ModifyAgent';
 import { Sidebar } from './components/layout/Sidebar';
 import { Navbar } from './components/layout/Navbar';
 import { LocationProvider } from './contexts/LocationContext';
@@ -139,6 +140,7 @@ function AppContent() {
             case 'analytics': return <Analytics />;
             case 'sms-templates': return <SMSTemplates />;
             case 'settings': return <Settings />;
+            case 'modify-agent': return <ModifyAgent />;
             default:
                 return (
                     <div className="empty-state animate-in">

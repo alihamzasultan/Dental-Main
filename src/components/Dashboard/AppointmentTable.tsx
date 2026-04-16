@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Eye, Edit3, Calendar, XCircle, Trash2, ChevronLeft, ChevronRight, MoreVertical } from 'lucide-react';
+import { Eye, Edit3, Calendar, XCircle, Trash2, ChevronLeft, ChevronRight, MoreVertical } from 'lucide-react';
 import { Appointment, useAppointments } from '../../hooks/useAppointments';
 import { Badge } from '../ui/Badge';
 import { format, isValid } from 'date-fns';
@@ -24,22 +24,8 @@ export function AppointmentTable({ onView, onEdit, onReschedule, onCancel, onDel
     const { appointments, loading, error } = useAppointments();
     const { role } = useAuth();
     const { locations } = useLocations();
-    const [searchTerm, setSearchTerm] = useState('');
-    const [statusFilter, setStatusFilter] = useState<string>('all');
 
-    const filteredAppointments = appointments
-        .filter((apt) => {
-            const matchesSearch =
-                (apt.patient_name?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-                (apt.email?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-                (apt.phone || '').includes(searchTerm);
-
-            const matchesStatus = statusFilter === 'all' || 
-                apt.status === statusFilter || 
-                (statusFilter === 'booked' && apt.status === 'rescheduled');
-
-            return matchesSearch && matchesStatus;
-        })
+    const filteredAppointments = [...appointments]
         .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
 
@@ -49,48 +35,7 @@ export function AppointmentTable({ onView, onEdit, onReschedule, onCancel, onDel
     return (
         <div className="table-container">
             {/* Table Headers/Controls */}
-            <div className="table-header-row">
-                <div className="search-input-wrapper" style={{ maxWidth: '360px' }}>
-                    <Search size={16} strokeWidth={2.5} style={{ position: 'absolute', left: '12px', color: 'var(--muted)' }} />
-                    <input
-                        type="text"
-                        placeholder="Search patient, email, phone..."
-                        className="search-input"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                    />
-                </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                    <select
-                        className="search-input"
-                        style={{
-                            padding: '8px 36px 8px 16px',
-                            borderRadius: '8px',
-                            border: '1px solid var(--border)',
-                            backgroundColor: 'var(--card)',
-                            fontSize: '13px',
-                            fontWeight: '600',
-                            color: 'var(--foreground)',
-                            cursor: 'pointer',
-                            outline: 'none',
-                            WebkitAppearance: 'none',
-                            backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")',
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 12px top 50%',
-                            backgroundSize: '10px auto'
-                        }}
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
-                    >
-                        <option value="all">All Status</option>
-                        <option value="booked">Booked</option>
-                        <option value="cancelled">Cancelled</option>
-                        <option value="rescheduled">Rescheduled</option>
-                        <option value="completed">Completed</option>
-                    </select>
-                </div>
-            </div>
 
             {/* Table Content */}
             <div className="custom-scrollbar" style={{ overflowX: 'auto' }}>
@@ -101,7 +46,6 @@ export function AppointmentTable({ onView, onEdit, onReschedule, onCancel, onDel
                             <th>Contact</th>
                             <th>Reason</th>
                             <th>Schedule</th>
-                            <th>Location</th>
                             <th>Status</th>
                             <th>Confirm</th>
                             <th>Reminder</th>
@@ -128,11 +72,6 @@ export function AppointmentTable({ onView, onEdit, onReschedule, onCancel, onDel
                                         <span style={{ fontWeight: '600' }}>{safeFormat(apt.appointment_time, 'MMM dd, yyyy')}</span>
                                         <span style={{ fontSize: '12px', color: 'var(--muted)' }}>{safeFormat(apt.appointment_time, 'hh:mm a')}</span>
                                     </div>
-                                </td>
-                                <td>
-                                    <span style={{ fontSize: '13px', color: 'var(--muted)', fontWeight: '500' }}>
-                                        {apt.location || 'N/A'}
-                                    </span>
                                 </td>
                                 <td>
                                     <Badge status={apt.status || 'booked'} />
