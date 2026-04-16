@@ -1,0 +1,82 @@
+[
+  {
+    "id": "80eabd52-71a3-4bdb-a711-2d9acfb6cc35",
+    "template_id": "negative_feedback",
+    "template_name": "Negative Feedback",
+    "sms_text": "Thank you for your honest feedback, {{ $('Get row(s) in sheet1').first().json['Customer Name'] }}. We're truly sorry your visit wasn't perfect. A member of our team will personally reach out to you soon to make it right. We appreciate your patience.\n-SmileCraft Family Dental.\n",
+    "created_at": "2026-03-18T09:05:40.229083+00:00",
+    "updated_at": "2026-03-18T09:05:40.229083+00:00"
+  },
+  {
+    "id": "9d0bb821-bfda-43df-8a3f-e809688cf642",
+    "template_id": "update_an_event",
+    "template_name": "Update an Event",
+    "sms_text": "Hi {{ $('Get row(s) in sheet').item.json['Customer Name'] }}, your SmileCraft appointment has been rescheduled to {{ DateTime.fromISO($('Update an event').item.json.start.dateTime).toFormat(\"MMM d, yyyy 'at' h:mm a\") }}. See you then! To cancel, please call us.\n",
+    "created_at": "2026-03-18T08:58:26+00:00",
+    "updated_at": "2026-03-18T08:58:28+00:00"
+  },
+  {
+    "id": "f94b0a39-cc25-4233-8416-b209d57943ad",
+    "template_id": "create_an_event",
+    "template_name": "Create an Event",
+    "sms_text": "Hi {{ $('Code in JavaScript').item.json.customer_name.charAt(0).toUpperCase() + $('Code in JavaScript').item.json.customer_name.slice(1) }}, your appointment at SmileCraft Family Dental is confirmed for {{ DateTime.fromISO($('Create an event').item.json.start.dateTime).toFormat(\"MMM d, yyyy 'at' h:mm a\") }}. See you soon! To cancel, please call us.\n",
+    "created_at": "2026-03-18T08:59:13+00:00",
+    "updated_at": "2026-03-18T08:59:14+00:00"
+  },
+  {
+    "id": "62238a31-1e08-4474-afe6-8403d83acad0",
+    "template_id": "delete_an_event",
+    "template_name": "Delete an event",
+    "sms_text": "Hi, your appointment at SmileCraft Family Dental has been cancelled as requested. Please call us at any time to rebook. We look forward to seeing you!\n",
+    "created_at": "2026-03-18T08:59:52.883568+00:00",
+    "updated_at": "2026-03-18T08:59:52.883568+00:00"
+  },
+  {
+    "id": "0384cb48-1ec9-4e41-8dde-67b02f104686",
+    "template_id": "appointment_reminder",
+    "template_name": "Appointment Reminder",
+    "sms_text": "Hi {{ $json['Customer Name'] }}, this is a friendly reminder from SmileCraft Family Dental & Orthodontics. You have an appointment tomorrow, {{ DateTime.fromISO($json['Booking Date']).toFormat('MMM d, yyyy') }} at {{ DateTime.fromISO($json['Booking Date']).toFormat('h:mm a') }}. Please call us if you need to reschedule.\r\nReply Y to CONFIRM or N to CANCEL. Thank you!\r\n",
+    "created_at": "2026-03-18T09:00:22+00:00",
+    "updated_at": "2026-03-17T17:55:32.367+00:00"
+  },
+  {
+    "id": "f07c502d-7f39-4299-9e33-172651fd7a43",
+    "template_id": "appointment_confirmed",
+    "template_name": "Appointment confirmed via SMS",
+    "sms_text": "Thank you for confirming your appointment! ✓\n\nWe look forward to seeing you on {{ DateTime.fromISO($('Get row(s) in sheet1').first().json['Booking Date']).toFormat('MMM d') }} at {{ DateTime.fromISO($('Get row(s) in sheet1').first().json['Booking Date']).toFormat('h:mm a') }}.\n",
+    "created_at": "2026-03-18T09:01:24.919426+00:00",
+    "updated_at": "2026-03-18T09:01:24.919426+00:00"
+  },
+  {
+    "id": "e94d6a1f-10f4-4ef7-8a87-003ea16c1cbc",
+    "template_id": "appointment_cancelled",
+    "template_name": "Appointment cancelled via SMS\n",
+    "sms_text": "We've cancelled your appointment as requested, {{ $('Get row(s) in sheet1').first().json['Customer Name'] }}.\n\nPlease call us when you're ready to reschedule. We hope to see you soon!\n\n- SmileCraft Family Dental & Orthodontics\n",
+    "created_at": "2026-03-18T09:02:43.328829+00:00",
+    "updated_at": "2026-03-18T09:02:43.328829+00:00"
+  },
+  {
+    "id": "98473056-7293-43d9-8210-6fa1c5730d71",
+    "template_id": "fallback",
+    "template_name": "Fallback for appointment response",
+    "sms_text": "We didn't understand your response. Please reply:\nY - to CONFIRM your appointment\nN - to CANCEL your appointment\n\nThank you!\n",
+    "created_at": "2026-03-18T09:03:29.745224+00:00",
+    "updated_at": "2026-03-18T09:03:29.745224+00:00"
+  },
+  {
+    "id": "81e1a232-c90a-4a0f-863e-4eff20370b41",
+    "template_id": "post_visit_feedback_sms",
+    "template_name": "Post visit feedback sms",
+    "sms_text": "Hi {{ $('Get row(s) in sheet').first().json['Customer Name'] }}, thank you for visiting SmileCraft Family Dental today for {{ $('Get row(s) in sheet').first().json['Reason for visit'] }}! We hope everything went well. Could you take 5 seconds to rate your experience? Reply 1 for Great 😊 or Reply 2 if something could be improved. Your feedback means everything to us!\n",
+    "created_at": "2026-03-18T09:04:33.947178+00:00",
+    "updated_at": "2026-03-18T09:04:33.947178+00:00"
+  },
+  {
+    "id": "17bff6ff-421e-4dea-9a85-0ed87a9c1da3",
+    "template_id": "positive_feedback",
+    "template_name": "Positive feedback",
+    "sms_text": "That's so great to hear, {{ $('Get row(s) in sheet1').first().json['Customer Name'] }}! 🌟 We'd really appreciate it if you shared your experience — it only takes 30 seconds and helps other families find us: https://g.page/r/YOUR_GOOGLE_REVIEW_LINK/review — Thank you for trusting SmileCraft! 😊\n",
+    "created_at": "2026-03-18T09:05:10.69707+00:00",
+    "updated_at": "2026-03-18T09:05:10.69707+00:00"
+  }
+]
