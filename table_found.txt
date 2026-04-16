@@ -1,0 +1,9 @@
+Table calls NOT found or error: Could not find the table 'public.calls' in the schema cache
+Table call_records NOT found or error: Could not find the table 'public.call_records' in the schema cache
+Table call_logs NOT found or error: Could not find the table 'public.call_logs' in the schema cache
+Table logs NOT found or error: Could not find the table 'public.logs' in the schema cache
+Table conversations NOT found or error: Could not find the table 'public.conversations' in the schema cache
+Table transcripts NOT found or error: Could not find the table 'public.transcripts' in the schema cache
+Table call_transcripts NOT found or error: Could not find the table 'public.call_transcripts' in the schema cache
+Table history NOT found or error: Could not find the table 'public.history' in the schema cache
+Table activities NOT found or error: Could not find the table 'public.activities' in the schema cache

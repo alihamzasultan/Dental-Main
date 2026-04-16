@@ -1,0 +1,24 @@
+﻿Probing table: call_logs...
+Table call_logs error: Could not find the table 'public.call_logs' in the schema cache
+Probing table: call_records...
+Table call_records error: Could not find the table 'public.call_records' in the schema cache
+Probing table: calls...
+Table calls error: Could not find the table 'public.calls' in the schema cache
+Probing table: call_data...
+Table call_data error: Could not find the table 'public.call_data' in the schema cache
+Probing table: appointments...
+Table appointments exists! Count: 3
+Sample data from appointments: {
+  "id": "98472b6f-bce6-4b16-a5ca-536cc7a2caf6",
+  "phone": "17374738620",
+  "patient_name": "Ginny John",
+  "email": "",
+  "reason_for_visit": "tooth extraction",
+  "appointment_time": "2026-03-14T04:30:00+05:00",
+  "calendar_event_id": "fjjfg42o9t5ooqctrtbojbn0oo",
+  "status": null,
+  "reminder_sent": "YES",
+  "created_at": "2026-03-14T04:30:00+05:00",
+  "updated_at": null,
+  "location": null
+}
