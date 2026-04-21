@@ -42,7 +42,7 @@ export function Modal({ isOpen, onClose, title, children, maxWidth = '600px' }: 
                         <X size={20} />
                     </button>
                 </header>
-                <div className="modal-body">
+                <div className="modal-body no-scrollbar">
                     {children}
                 </div>
             </div>
