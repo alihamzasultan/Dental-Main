@@ -1,9 +1,6 @@
 import React from 'react';
-import { PanelLeftClose, PanelLeftOpen, Search, Sun, Moon, User, LogOut, MapPin, Bell, Check, Trash2, MessageSquare, CheckCircle, XCircle, Calendar } from 'lucide-react';
-import { useNotifications, Notification } from '../../contexts/NotificationContext';
-import { format } from 'date-fns';
+import { PanelLeftClose, PanelLeftOpen, Sun, Moon, MapPin } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
-import { useAuth } from '../../contexts/AuthContext';
 import { useLocations } from '../../contexts/LocationContext';
 
 interface NavbarProps {
@@ -29,10 +26,29 @@ export function Navbar({
                 >
                     {isSidebarOpen ? <PanelLeftClose size={18} /> : <PanelLeftOpen size={18} />}
                 </button>
-
-
-
-
+                <div style={{ marginLeft: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--muted)', fontWeight: 700, fontSize: '13px' }}>
+                        <MapPin size={16} />
+                        <span>Location</span>
+                    </div>
+                    <select
+                        className="search-input"
+                        style={{ height: '36px', padding: '0 12px', minWidth: '200px' }}
+                        value={selectedLocation ? selectedLocation.id : '__all__'}
+                        onChange={(e) => {
+                            const v = e.target.value;
+                            if (v === '__all__') return setSelectedLocation(null);
+                            setSelectedLocation(locations.find(l => l.id === v) || null);
+                        }}
+                    >
+                        <option value="__all__">All locations</option>
+                        {locations.map(loc => (
+                            <option key={loc.id} value={loc.id}>
+                                {loc.city && loc.city !== 'Global' ? `${loc.name} · ${loc.city}` : loc.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
             </div>
 
             <div className="navbar-right">

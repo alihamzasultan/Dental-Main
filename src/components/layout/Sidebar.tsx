@@ -16,6 +16,7 @@ import {
     Bot
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
+import { useAgents } from '../../hooks/useAgents';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -26,6 +27,7 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }: SidebarProps) {
     const { user, role, logout } = useAuth();
+    const { agents, count: agentCount, loading: agentsLoading } = useAgents();
     const [showUserMenu, setShowUserMenu] = React.useState(false);
     const userMenuRef = React.useRef<HTMLDivElement>(null);
 
@@ -213,6 +215,14 @@ export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }:
                             active={activePage === 'sms-templates'}
                             onClick={() => setActivePage('sms-templates')}
                             isOpen={isOpen}
+                        />
+                        <NavItem
+                            icon={<Bot size={18} strokeWidth={1.5} />}
+                            label="My Agents"
+                            active={activePage === 'my-agents'}
+                            onClick={() => setActivePage('my-agents')}
+                            isOpen={isOpen}
+                            badge={agentsLoading ? undefined : (typeof agentCount === 'number' ? agentCount : agents.length) || undefined}
                         />
                         <NavItem
                             icon={<Bot size={18} strokeWidth={1.5} />}

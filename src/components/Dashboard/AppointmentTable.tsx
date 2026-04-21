@@ -46,6 +46,8 @@ export function AppointmentTable({ onView, onEdit, onReschedule, onCancel, onDel
                             <th>Contact</th>
                             <th>Reason</th>
                             <th>Schedule</th>
+                            <th>Location</th>
+                            <th>Agent Phone</th>
                             <th>Status</th>
                             <th>Confirm</th>
                             <th>Reminder</th>
@@ -72,6 +74,37 @@ export function AppointmentTable({ onView, onEdit, onReschedule, onCancel, onDel
                                         <span style={{ fontWeight: '600' }}>{safeFormat(apt.appointment_time, 'MMM dd, yyyy')}</span>
                                         <span style={{ fontSize: '12px', color: 'var(--muted)' }}>{safeFormat(apt.appointment_time, 'hh:mm a')}</span>
                                     </div>
+                                </td>
+                                <td>
+                                    {apt.location ? (
+                                        <span style={{
+                                            display: 'inline-flex', alignItems: 'center', gap: '4px',
+                                            fontSize: '11px', fontWeight: '700',
+                                            padding: '3px 8px', borderRadius: '999px',
+                                            backgroundColor: 'var(--primary-light)',
+                                            color: 'var(--primary)',
+                                            whiteSpace: 'nowrap'
+                                        }}>
+                                            {apt.location}
+                                        </span>
+                                    ) : (
+                                        <span style={{ color: 'var(--muted)', fontSize: '12px' }}>—</span>
+                                    )}
+                                </td>
+                                <td>
+                                    {apt.agent_phone ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                            <span style={{
+                                                fontSize: '12px', fontWeight: '600', color: 'var(--foreground)',
+                                                border: '1px solid var(--border)', borderRadius: '6px', padding: '2px 6px',
+                                                backgroundColor: 'var(--background)'
+                                            }}>
+                                                {apt.agent_phone}
+                                            </span>
+                                        </div>
+                                    ) : (
+                                        <span style={{ color: 'var(--muted)', fontSize: '12px' }}>—</span>
+                                    )}
                                 </td>
                                 <td>
                                     <Badge status={apt.status || 'booked'} />

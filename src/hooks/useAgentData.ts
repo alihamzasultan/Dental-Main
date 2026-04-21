@@ -21,27 +21,35 @@ export function useAgentData() {
     const { selectedLocation } = useLocations();
 
     const fetchLatestData = useCallback(async () => {
-        if (!selectedLocation) return;
+        if (!selectedLocation) {
+            setLoading(false);
+            return;
+        }
         
         try {
             setLoading(true);
+            // Use select('*') to avoid 400 errors from column name mismatches
             const { data, error } = await supabase
                 .from('agent_location_data')
                 .select('*')
-                // Filter by city if it matches our selected location city
-                .ilike('locaion_city', selectedLocation.city) 
                 .order('id', { ascending: false })
-                .limit(1)
-                .single();
+                .limit(10);
 
             if (error) {
+                console.error('[useAgentData] Supabase error:', error.code, error.message, error.details, error.hint);
                 if (error.code === 'PGRST116') {
                     setLastSubmission(null);
                 } else {
                     console.warn('Fetch error:', error.message);
                 }
             } else {
-                setLastSubmission(data);
+                // Filter client-side by city to avoid column-name issues
+                const cityKey = selectedLocation.city?.toLowerCase();
+                const match = (data || []).find((row: any) => {
+                    const rowCity = (row.locaion_city || row.location_city || '').toLowerCase();
+                    return !cityKey || cityKey === 'global' || rowCity === cityKey || rowCity === '';
+                }) || (data && data.length > 0 ? data[0] : null);
+                setLastSubmission(match || null);
             }
         } catch (err: any) {
             console.error('Error fetching latest agent data:', err);

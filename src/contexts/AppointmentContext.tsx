@@ -22,6 +22,7 @@ export interface Appointment {
     follow_up_response?: string | null;
     follow_up_response_type?: 'POSITIVE' | 'NEGATIVE' | null;
     feedback_text?: string | null;
+    agent_phone?: string;
     created_at: string;
     updated_at: string;
 }
