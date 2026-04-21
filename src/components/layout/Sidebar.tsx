@@ -222,7 +222,7 @@ export function Sidebar({ isOpen, isMobile = false, activePage, setActivePage }:
                             active={activePage === 'my-agents'}
                             onClick={() => setActivePage('my-agents')}
                             isOpen={isOpen}
-                            badge={agentsLoading ? undefined : (typeof agentCount === 'number' ? agentCount : agents.length) || undefined}
+                        // badge={agentsLoading ? undefined : (typeof agentCount === 'number' ? agentCount : agents.length) || undefined}
                         />
                         <NavItem
                             icon={<Bot size={18} strokeWidth={1.5} />}
