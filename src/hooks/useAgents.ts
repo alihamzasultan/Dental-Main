@@ -42,7 +42,7 @@ export function useAgents() {
     }
   }, []);
 
-  const updateAgent = useCallback(async (id: number, updates: Partial<AgentRow>) => {
+  const updateAgent = useCallback(async (id: number, updates: Partial<AgentRow>): Promise<void> => {
     try {
       const { error } = await supabase
         .from('agent_location_data')
@@ -54,7 +54,6 @@ export function useAgents() {
         throw error;
       }
       refresh();
-      return true;
     } catch (e: any) {
       console.error('Failed to update agent:', e);
       throw e;

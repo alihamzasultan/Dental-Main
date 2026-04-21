@@ -7,7 +7,7 @@ interface EditAgentModalProps {
     isOpen: boolean;
     onClose: () => void;
     agent: AgentRow | null;
-    onSave: (id: number, updates: Partial<AgentRow>) => Promise<void>;
+    onSave: (id: number, updates: Partial<AgentRow>) => Promise<any>;
 }
 
 export function EditAgentModal({ isOpen, onClose, agent, onSave }: EditAgentModalProps) {
