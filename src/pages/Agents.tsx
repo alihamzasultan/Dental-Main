@@ -66,13 +66,13 @@ export function Agents() {
                         <tbody>
                             {agentsLoading ? (
                                 <tr>
-                                    <td colSpan={6} style={{ textAlign: 'center', padding: '40px', color: 'var(--muted)' }}>
+                                    <td colSpan={7} style={{ textAlign: 'center', padding: '40px', color: 'var(--muted)' }}>
                                         Loading agents...
                                     </td>
                                 </tr>
                             ) : agentsError ? (
                                 <tr>
-                                    <td colSpan={6} style={{ textAlign: 'center', padding: '40px', color: 'var(--status-cancelled)', fontWeight: 800 }}>
+                                    <td colSpan={7} style={{ textAlign: 'center', padding: '40px', color: 'var(--status-cancelled)', fontWeight: 800 }}>
                                         Failed to load agents: {agentsError}
                                     </td>
                                 </tr>
@@ -155,7 +155,7 @@ export function Agents() {
                                 ))
                             ) : (
                                 <tr>
-                                    <td colSpan={6} style={{ textAlign: 'center', padding: '48px', color: 'var(--muted)', fontStyle: 'italic' }}>
+                                    <td colSpan={7} style={{ textAlign: 'center', padding: '48px', color: 'var(--muted)', fontStyle: 'italic' }}>
                                         No agents found. Create one in the Agent Configuration page.
                                     </td>
                                 </tr>
