@@ -11,6 +11,9 @@ const COUNTRIES = [
     { code: 'AU', name: 'Australia', prefix: '+61' },
 ];
 
+const EXCLUDED_NUMBERS = ['+17372710090', '+17869813765'];
+
+
 export function ModifyAgent() {
     const { lastSubmission, loading, createAgentEntry } = useAgentData();
     const { role } = useAuth();
@@ -202,10 +205,13 @@ export function ModifyAgent() {
 
     const filteredNumbers = useMemo(() => {
         const source = provisionMode === 'search' ? allNumbers : inventoryNumbers;
-        if (!searchQuery) return source;
+        const available = source.filter(num => !EXCLUDED_NUMBERS.includes(num.number));
+        
+        if (!searchQuery) return available;
         const cleanQuery = searchQuery.replace(/\+/g, '').replace(/\D/g, '');
-        return source.filter(num => num.number.replace(/\D/g, '').includes(cleanQuery));
+        return available.filter(num => num.number.replace(/\D/g, '').includes(cleanQuery));
     }, [searchQuery, allNumbers, inventoryNumbers, provisionMode]);
+
 
     const handleSave = async (e: React.FormEvent) => {
         e.preventDefault();
