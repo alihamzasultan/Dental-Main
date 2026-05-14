@@ -14,7 +14,7 @@ const COUNTRIES = [
 const EXCLUDED_NUMBERS = [
     '+17372710090', 
     '+17869813765', 
-    '+15123372669',
+    '+15123372669', 
     '+15128830081', 
     '+12197665259', 
     '+447886069953', 
@@ -427,7 +427,7 @@ export function ModifyAgent() {
                             <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                                 <thead style={{ backgroundColor: 'var(--background)', fontSize: '12px', color: 'var(--muted)' }}>
                                     <tr>
-                                        <th style={{ padding: '16px 24px' }}>Phone Number</th>
+                                        <th style={{ padding: '16px 24px' }}>Number & Description</th>
                                         <th style={{ padding: '16px 24px' }}>Vapi Sync</th>
                                         <th style={{ padding: '16px 24px' }}>Capabilities</th>
                                         <th style={{ padding: '16px 24px' }}>Price/Status</th>
@@ -439,7 +439,10 @@ export function ModifyAgent() {
                                         <tr key={res.id} style={{ borderBottom: '1px solid var(--border)' }}>
                                             <td style={{ padding: '16px 24px' }}>
                                                 <div style={{ fontWeight: '800', fontSize: '15px' }}>{res.number}</div>
-                                                <div style={{ fontSize: '11px', color: 'var(--muted)' }}>{res.locality}, {res.region}</div>
+                                                {res.friendlyName && res.friendlyName !== res.number && (
+                                                    <div style={{ fontSize: '12px', color: 'var(--primary)', fontWeight: '700', marginTop: '2px' }}>{res.friendlyName}</div>
+                                                )}
+                                                <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '2px' }}>{res.locality}, {res.region}</div>
                                             </td>
                                             <td style={{ padding: '16px 24px' }}>
                                                 {res.assistantId ? (
