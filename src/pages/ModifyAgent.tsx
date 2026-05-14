@@ -11,7 +11,16 @@ const COUNTRIES = [
     { code: 'AU', name: 'Australia', prefix: '+61' },
 ];
 
-const EXCLUDED_NUMBERS = ['+17372710090', '+17869813765'];
+const EXCLUDED_NUMBERS = [
+    '+17372710090', 
+    '+17869813765', 
+    '+15123372669', 
+    '+15128830081', 
+    '+12197665259', 
+    '+447886069953', 
+    '+17739748492', 
+    '+14154981329'
+];
 
 
 export function ModifyAgent() {
@@ -205,7 +214,10 @@ export function ModifyAgent() {
 
     const filteredNumbers = useMemo(() => {
         const source = provisionMode === 'search' ? allNumbers : inventoryNumbers;
-        const available = source.filter(num => !EXCLUDED_NUMBERS.includes(num.number));
+        const available = source.filter(num => {
+            const cleanSource = num.number.replace(/\s+/g, '');
+            return !EXCLUDED_NUMBERS.some(ex => ex.replace(/\s+/g, '') === cleanSource);
+        });
         
         if (!searchQuery) return available;
         const cleanQuery = searchQuery.replace(/\+/g, '').replace(/\D/g, '');
